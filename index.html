@@ -41,9 +41,11 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#http://geoportal.penajamkab.go.id/"
-                            target="_blank"><i class="fa-solid fa-layer-group"></i> Sumber Data</a>
+                        <a class="nav-link active" aria-current="page" href="http://geoportal.penajamkab.go.id/" target="_blank">
+                            <i class="fa-solid fa-layer-group"></i> Sumber Data
+                        </a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                                 class="fa-solid fa-circle-info"></i> Info</a>
@@ -287,33 +289,31 @@
 
             onEachFeature: function (feature, layer) {
                 // variable popup content
-                var popup_content =
-                    "Kecamatan: " + feature.properties.KECAMATAN + "<br>" +
-                    "Desa: " + feature.properties.DESA_KELUR + "<br>"
-                "Jumlah Penduduk: " + feature.properties.JML_PDDK_1 + "Jiwa";
+                //var popup_content = "Kecamatan: " + feature.properties.kecamatan + "<br>" + "Desa: " + feature.properties.DESA_KELUR + "<br>"
+
+                var popup_content = "KECAMATAN: " + feature.properties.KECAMATAN + "<br>" + feature.properties.DESA_KELUR + "<br>" + "Jumlah Penduduk: " + feature.properties.JML_PDDK_1;
 
                 layer.on({
                     click: function (e) {
-                        jumlah_penduduk.bindPopup(popup_content);
-                        //Menampilkan feature modal
+                        //jumlah_penduduk.bindPopup(popup_content);
+
+                        // Menampilkan feature modal
                         $("#featureModalTitle").html("Jumlah Penduduk");
                         $("#featureModalBody").html(popup_content);
                         $("#featureModal").modal("show");
                     },
-
-
-                    mouseover: function (e) {
-                        jumlah_penduduk.bindTooltip(feature.properties.DESA_KELUR, {
-                            direction: "auto",
-                            sticky: true,
-                        });
-                    },
-
                 });
             },
 
-        });
+            mouseover: function (e) {
+                jumlah_penduduk.bindTooltip(feature.properties.DESA_KELUR, {
+                    direction: "auto",
+                    sticky: true,
+                });
+            }
 
+                });
+    
         $.getJSON("data/jumlah_penduduk_geojson.geojson", function (data) {
             jumlah_penduduk.addData(data); // Menambahkan data ke dalam GeoJSON Polygon Jumlah Penduduk
             map.addLayer(jumlah_penduduk); // Menambahkan GeoJSON Polygon Jumlah Penduduk ke dalam peta
